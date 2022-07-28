@@ -114,7 +114,7 @@ class CRPBlock(nn.Module):
 class HydraNet(nn.Module):
     def __init__(self):
         super().__init__()
-        self.num_tasks = 3
+        self.num_tasks = 2
         self.num_classes = 6
 
     def define_mobilenet(self):

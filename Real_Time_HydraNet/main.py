@@ -58,7 +58,7 @@ def main(source, fpath):
         pass
     elif source == 1:
         img = np.array(Image.open(fpath))
-        depth, segm, norm = pipeline(img, hydranet, NUM_CLASSES, CMAP)
+        depth, segm = pipeline(img, hydranet, NUM_CLASSES, CMAP)
 
         f, (ax1, ax2, ax3) = plt.subplot(1, 3, figsize=(30, 20))
         ax1.imshow(img)
@@ -70,7 +70,6 @@ def main(source, fpath):
         plt.show()
         cv2.imwrite('depth', depth)
         cv2.imwrite('segm', segm)
-        cv2.imwrite('norm', norm)
 
     elif source == 2:
         images_files = glob.glob(fpath + '/*.png')
