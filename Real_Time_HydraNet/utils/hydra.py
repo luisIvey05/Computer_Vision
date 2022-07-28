@@ -219,7 +219,7 @@ class HydraNet(nn.Module):
         l5 = self.relu(l5 + l6 + l7)
         l5 = self.crp3(l5)
         l5 = self.conv_adapt3(l5)
-        l5 = nn.Upsample(size=l4.size()[2:], mode='bilinear', align_corners=False)(l4)
+        l5 = nn.Upsample(size=l4.size()[2:], mode='bilinear', align_corners=False)(l5)
 
         l4 = self.conv4(l4)
         l4 = self.relu(l5 + l4)
