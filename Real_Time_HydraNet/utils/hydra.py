@@ -144,9 +144,9 @@ class HydraNet(nn.Module):
         mobilenet_config = [[1, 16, 1, 1],  # L1
                             [6, 24, 2, 2],  # L2
                             [6, 32, 3, 2],  # L3
-                            [6, 64, 4, 1],  # L4
+                            [6, 64, 4, 2],  # L4
                             [6, 96, 3, 1],  # L5
-                            [6, 160, 3, 1],  # L6
+                            [6, 160, 3, 2],  # L6
                             [6, 320, 1, 1],  # L7
                             ]
         self.in_channels = 32  # Number of input channels
