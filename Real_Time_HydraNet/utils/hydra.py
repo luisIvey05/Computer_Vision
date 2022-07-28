@@ -66,7 +66,7 @@ def convbnrelu(in_channels, out_channels, kernel_size, stride=1, groups=1, act=T
         return nn.Sequential(nn.Conv2d(in_channels, out_channels, kernel_size, stride=stride,
                                        padding=int(kernel_size / 2.), groups=groups, bias=False),
                              batchnorm(out_channels),
-                             nn.ReLU6)
+                             nn.ReLU6(inplace=True))
     else:
         return nn.Sequential(nn.Conv2d(in_channels, out_channels, kernel_size, stride=stride,
                                        padding=int(kernel_size / 2.), groups=groups, bias=False),
