@@ -174,10 +174,10 @@ class HydraNet(nn.Module):
         self.conv4 = conv1x1(32, 256, bias=False)
         self.conv3 = conv1x1(24, 256, bias=False)
 
-        self.crp4 = self._make_crp(256, 256, 4, gropus=False)
-        self.crp3 = self._make_crp(256, 256, 4, gropus=False)
-        self.crp2 = self._make_crp(256, 256, 4, gropus=False)
-        self.crp1 = self._make_crp(256, 256, 4, gropus=True)
+        self.crp4 = self._make_crp(256, 256, 4, groups=False)
+        self.crp3 = self._make_crp(256, 256, 4, groups=False)
+        self.crp2 = self._make_crp(256, 256, 4, groups=False)
+        self.crp1 = self._make_crp(256, 256, 4, groups=True)
 
         self.conv_adapt4 = conv1x1(256, 256, bias=False)
         self.conv_adapt3 = conv1x1(256, 256, bias=False)
