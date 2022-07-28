@@ -79,7 +79,7 @@ class InvertedResidualBlock(nn.Module):
         intermed_planes = in_planes * expansion_factor
         self.residual = (in_planes == out_planes) and (stride == 1)  # Boolean/Conditional
         self.output = nn.Sequential(convbnrelu(in_planes, intermed_planes, 1),
-                                    convbnrelu(intermed_planes, 3, stride=stride, groups=intermed_planes),
+                                    convbnrelu(intermed_planes, intermed_planes, 3, stride=stride, groups=intermed_planes),
                                     convbnrelu(intermed_planes, out_planes, 1, act=False))
 
     def forward(self, x):
