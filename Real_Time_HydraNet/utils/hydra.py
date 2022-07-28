@@ -17,7 +17,7 @@ def conv3x3(in_channels, out_channels, stride=1, dilation=1, groups=1, bias=Fals
     :return: A conv3x3 layer.
 
     """
-    return nn.Conv2d(in_channels, out_channels, kernel_size=3, stride=stride, padding=dilation, bias=bias,
+    return nn.Conv2d(in_channels, out_channels, kernel_size=3, stride=stride, padding=dilation, dilation=dilation, bias=bias,
                      groups=groups)
 
 
