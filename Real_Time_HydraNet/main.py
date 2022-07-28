@@ -68,6 +68,9 @@ def main(source, fpath):
         ax3.imshow(depth, cmap="plasma", vmin=0, vmax=80)
         ax3.set_title('DEPTH', fontsize=30)
         plt.show()
+        cv2.imwrite('depth', depth)
+        cv2.imwrite('segm', segm)
+        cv2.imwrite('norm', norm)
 
     elif source == 2:
         images_files = glob.glob(fpath + '/*.png')
