@@ -42,7 +42,6 @@ def pipeline(img, hydranet, NUM_CLASSES, CMAP):
 def main(source, fpath):
     hydranet = HydraNet()
     hydranet.define_mobilenet()
-    print(hydranet)
     hydranet.define_lightweight_refinenet()
 
     if torch.cuda.is_available():

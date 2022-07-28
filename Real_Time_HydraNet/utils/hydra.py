@@ -136,8 +136,8 @@ class HydraNet(nn.Module):
                 layers.append(InvertedResidualBlock(self.in_channels, c, expansion_factor=t, stride=s if
                 idx == 0 else 1))
                 self.in_channels = c
-                setattr(self, 'layer{}'.format(c_layer), nn.Sequential(*layers))  # setattr(object, name, value)
-                c_layer += 1  # stores mobilenet layers in hydranet
+            setattr(self, 'layer{}'.format(c_layer), nn.Sequential(*layers))  # setattr(object, name, value)
+            c_layer += 1  # stores mobilenet layers in hydranet
 
     def _make_crp(self, in_planes, out_planes, stages, groups=False):
         layers = [CRPBlock(in_planes, out_planes, stages, groups=groups)]  # Call a CRP Blocks in layers
