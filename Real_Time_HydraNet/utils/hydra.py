@@ -114,29 +114,6 @@ class CRPBlock(nn.Module):
 class HydraNet(nn.Module):
     def __init__(self):
         super().__init__()
-        self.normal = None
-        self.pre_normal = None
-        self.relu = None
-        self.segm = None
-        self.pre_segm = None
-        self.depth = None
-        self.pre_depth = None
-        self.conv_adapt2 = None
-        self.conv_adapt3 = None
-        self.conv_adapt4 = None
-        self.crp1 = None
-        self.crp2 = None
-        self.crp3 = None
-        self.crp4 = None
-        self.conv3 = None
-        self.conv4 = None
-        self.conv5 = None
-        self.conv6 = None
-        self.conv7 = None
-        self.conv8 = None
-        self.layer1 = None
-        self.num_layers = None
-        self.in_channels = None
         self.num_tasks = 2
         self.num_classes = 6
 
