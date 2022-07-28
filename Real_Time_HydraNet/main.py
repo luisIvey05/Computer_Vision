@@ -19,7 +19,7 @@ def pipeline(img, hydranet, NUM_CLASSES, CMAP):
                            requires_grad=False).float()  # Put the image in PyTorch Variable
         if torch.cuda.is_available():
             img_var = img_var.cuda()  # Send to GPU
-        segm, depth, norm = hydranet(img_var)  # Call the HydraNet
+        segm, depth = hydranet(img_var)  # Call the HydraNet
 
         segm = cv2.resize(segm[0, :NUM_CLASSES].cpu().data.numpy().transpose(1, 2, 0), img.shape[:2][::-1],
                           interpolation=cv2.INTER_CUBIC)  # Post-Process / Resize
@@ -27,16 +27,11 @@ def pipeline(img, hydranet, NUM_CLASSES, CMAP):
         depth = cv2.resize(depth[0, 0].cpu().data.numpy(), img.shape[:2][::-1],
                            interpolation=cv2.INTER_CUBIC)  # Post-Process / Resize
 
-        norm = cv2.resize(norm[0, 0].cpu().data.numpy(), img.shape[:2][::-1],
-                          interpolation=cv2.INTER_CUBIC)
-
         segm = CMAP[segm.argmax(axis=2).astype(np.uint8)]  # Use the CMAP
 
         depth = np.abs(depth)  # Take the abs value
 
-        norm = np.abs(norm)
-
-    return depth, segm, norm
+    return depth, segm
 
 
 def main(source, fpath):
