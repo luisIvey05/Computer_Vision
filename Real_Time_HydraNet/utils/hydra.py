@@ -29,7 +29,7 @@ def batchnorm(num_features):
     :param num_features: C from an expected input of size (N,C,H,W)
     :return: A batchnorm layer.
     """
-    return nn.BatchNorm2d(num_features, affine=True, eps=le - 5, momentum=0.1)
+    return nn.BatchNorm2d(num_features, affine=True, eps=1e-5, momentum=0.1)
 
 
 def conv1x1(in_channels, out_channels, stride=1, groups=1, bias=False):
