@@ -133,8 +133,6 @@ class HydraNet(nn.Module):
         for t, c, n, s in mobilenet_config:
             layers = []
             for idx in range(n):
-                print("[INFO] {}, {}, {}, {}".format(t, c, n, s))
-                print("[INFO] IN_CHANNELS {}".format(self.in_channels))
                 layers.append(InvertedResidualBlock(self.in_channels, c, expansion_factor=t, stride=s if
                 idx == 0 else 1))
                 self.in_channels = c
