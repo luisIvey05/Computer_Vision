@@ -75,7 +75,7 @@ def convbnrelu(in_channels, out_channels, kernel_size, stride=1, groups=1, act=T
 
 class InvertedResidualBlock(nn.Module):
     def __init__(self, in_planes, out_planes, expansion_factor, stride=1):
-        super.__init__()
+        super().__init__()
         intermed_planes = in_planes * expansion_factor
         self.residual = (in_planes == out_planes) and (stride == 1)  # Boolean/Conditional
         self.output = nn.Sequential(convbnrelu(in_planes, intermed_planes, 1),
