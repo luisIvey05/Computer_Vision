@@ -62,8 +62,8 @@ def main(source, fpath):
         # ax2.set_title('SEGMENTATION', fontsize=30)
         # ax3.imshow(depth, cmap="plasma", vmin=0, vmax=80)
         # plt.show()
-        cv2.imwrite('depth', depth)
-        cv2.imwrite('segm', segm)
+        cv2.imwrite('depth.jpg', depth)
+        cv2.imwrite('segm.jpg', segm)
 
     elif source == 2:
         images_files = glob.glob(fpath + '/*.png')
