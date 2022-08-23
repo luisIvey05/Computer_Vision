@@ -145,6 +145,7 @@ class KalmanBoxTracker(object):
             self.hit_streak = 0
         self.time_since_update += 1
         self.history.append(convert_x_to_bbox(self.kf.x))
+
         return self.history[-1]
 
     def get_state(self):
