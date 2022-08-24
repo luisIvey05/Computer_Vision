@@ -1,6 +1,6 @@
 import os
 #from util import bounding
-from sort import Sort
+from sort import VehicleTracker
 import numpy as np
 from mpl_toolkits import mplot3d
 import matplotlib.pyplot as plt
@@ -23,7 +23,7 @@ os.makedirs(folder_out)
 
 draw_imgs = []
 
-sort = Sort(max_age=1, min_hits=3, iou_threshold=0.3)
+tracker = VehicleTracker(max_age=1, min_hits=3, iou_threshold=0.3)
 
 i = 0
 rolling_counter = 0
@@ -49,30 +49,31 @@ while True:
     else:
         boxes = np.empty((0, 5))
 
-    res = sort.update(detections)
+    res = tracker.update(detections)
 
-    boxes_track = res[:,:-1].astype(int)
-    boxes_ids = res[:,-1].astype(int)
+    boxes_track = res[:, :-2].astype(int)
+    boxes_ids = res[:, -2].astype(int)
+    stopped_vehicles = res[:, -1].astype(bool)
 
-    for bbox, id, score in zip(boxes_track, boxes_ids, scores):
-        text = "{} ID:{} Score:{:.2f}".format(DETECT, id, score)
-        if id == 1:
-            x = round((abs(bbox[2] - bbox[0])) / 2)
-            y = round((abs(bbox[3] - bbox[1])) / 2)
-            pointy[rolling_counter] = y
-            pointx[rolling_counter] = x
-            rolling_counter = (rolling_counter + 1) % 12
-            if pointy.count(pointy[0]) == len(pointy) and pointx.count(pointx[0]) == len(pointx) and not hasStopped:
-                print("[INFO] CAR 1 HAS STOPPED")
-                hasStopped = True
-                cv2.putText(frame, text, (bbox[0], bbox[1] + 15), cv2.FONT_HERSHEY_SIMPLEX, 0.65, (0, 255, 0),
-                            1)  # Annotate the frame to be sent back to the main driver
-                cv2.rectangle(frame, (bbox[0], bbox[1]), (bbox[2], bbox[3]), (0, 0, 255), 1)
-            elif hasStopped:
-                print(i, x, y)
-                cv2.putText(frame, text, (bbox[0], bbox[1] + 15), cv2.FONT_HERSHEY_SIMPLEX, 0.65, (0, 255, 0),
-                            1)  # Annotate the frame to be sent back to the main driver
-                cv2.rectangle(frame, (bbox[0], bbox[1]), (bbox[2], bbox[3]), (0, 0, 255), 1)
+    for bbox, id, score, stopped in zip(boxes_track, boxes_ids, scores, stopped_vehicles):
+        text = "{} ID:{}".format(DETECT, id)
+        if stopped:
+            cv2.putText(frame, text, (bbox[0], bbox[1] + 15), cv2.FONT_HERSHEY_SIMPLEX, 0.65, (0, 0, 255),
+                        1)  # Annotate the frame to be sent back to the main driver
+            cv2.rectangle(frame, (bbox[0], bbox[1]), (bbox[2], bbox[3]), (0, 0, 255), 1)
+        else:
+            cv2.putText(frame, text, (bbox[0], bbox[1] + 15), cv2.FONT_HERSHEY_SIMPLEX, 0.65, (0, 255, 0),
+                        1)  # Annotate the frame to be sent back to the main driver
+            cv2.rectangle(frame, (bbox[0], bbox[1]), (bbox[2], bbox[3]), (0, 255, 0), 1)
+    #     if id == 1:
+    #         x = round((abs(bbox[2] - bbox[0])) / 2)
+    #         y = round((abs(bbox[3] - bbox[1])) / 2)
+    #         pointy[rolling_counter] = y
+    #         pointx[rolling_counter] = x
+    #         rolling_counter = (rolling_counter + 1) % 12
+    #         if pointy.count(pointy[0]) == len(pointy) and pointx.count(pointx[0]) == len(pointx) and not hasStopped:
+    #             hasStopped = True
+
 
     cv2.imshow("Frame", frame)  # Display anotated frame from the suspicious class
     if cv2.waitKey(25) & 0xFF == ord('q'):
