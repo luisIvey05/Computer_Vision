@@ -77,9 +77,9 @@ def main(source, fpath):
             shutil.rmtree(depth_fldr)
         os.makedirs(segm_fldr)
         os.makedirs(depth_fldr)
-        for idx, fname in enumerate(images_files):
+        for idx, fpath in enumerate(images_files):
             fname = os.path.basename(fname)
-            img = np.array(Image.open(fname))
+            img = np.array(Image.open(fpath))
             depth, segm = pipeline(img, hydranet, NUM_CLASSES, CMAP)
             cv2.imwrite("./" + depth_fldr + "/" + fname, depth)
             # cv2.imwrite("./" + segm_fldr + "/" + fname, segm)
