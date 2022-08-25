@@ -1,6 +1,8 @@
 import matplotlib.pyplot as plt
 from torch.autograd import Variable
 import torch
+import os
+import shutil
 import matplotlib as cm
 import matplotlib.colors as co
 import numpy as np
@@ -67,11 +69,20 @@ def main(source, fpath):
 
     elif source == 2:
         images_files = glob.glob(fpath + '/*.png')
+        segm_fldr = "Segm"
+        depth_fldr = "Depth"
+        if os.path.exists(segm_fldr):
+            shutil.rmtree(segm_fldr)
+        if os.path.exists(depth_fldr):
+            shutil.rmtree(depth_fldr)
+        os.makedirs(segm_fldr)
+        os.makedirs(depth_fldr)
         for idx, fname in enumerate(images_files):
+            fname = os.path.basename(fname)
             img = np.array(Image.open(fname))
             depth, segm = pipeline(img, hydranet, NUM_CLASSES, CMAP)
-            cv2.imwrite(fname + "_{}depth.jpg".format(idx), depth)
-            cv2.imwrite(fname + "_{}segm.jpg".format(idx), segm)
+            cv2.imwrite("./" + depth_fldr + "/" + fname, depth)
+            # cv2.imwrite("./" + segm_fldr + "/" + fname, segm)
     elif source == 3:
         video = cv2.VideoCapture(fpath)
         if (video.isOpened() == False):
