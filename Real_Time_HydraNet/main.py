@@ -83,14 +83,15 @@ def main(source, fpath):
             depth, segm = pipeline(img, hydranet, NUM_CLASSES, CMAP)
             cv2.imwrite("./" + depth_fldr + "/" + fname, depth)
             # cv2.imwrite("./" + segm_fldr + "/" + fname, segm)
+
     elif source == 3:
         video = cv2.VideoCapture(fpath)
-        if (video.isOpened() == False):
+        if video.isOpened() == False:
             print("[INFO] ERROR OPENING VIDEO STREAM OR FILE")
         while video.isOpened():
             (check, frame) = video.read()
 
-            if check == True:
+            if check:
                 frame_size = frame.shape[:2]
                 frame = np.array(frame)
                 depth, segm = pipeline(frame, hydranet, NUM_CLASSES, CMAP)
