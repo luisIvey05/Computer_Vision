@@ -90,7 +90,7 @@ def main(source, fpath):
         video = cv2.VideoCapture(fpath)
         if video.isOpened() == False:
             print("[INFO] ERROR OPENING VIDEO STREAM OR FILE")
-        f, (ax1, ax2, ax3) = plt.subplot(1, 3, figsize=(30, 20))
+        f, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(30, 20))
         plt.ion()
         while video.isOpened():
             (check, frame) = video.read()
