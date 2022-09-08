@@ -90,26 +90,19 @@ def main(source, fpath):
         video = cv2.VideoCapture(fpath)
         if video.isOpened() == False:
             print("[INFO] ERROR OPENING VIDEO STREAM OR FILE")
-        f, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(30, 20))
-        plt.ion()
+        video = []
         while video.isOpened():
             (check, frame) = video.read()
-
             if check:
-                frame_size = frame.shape[:2]
+                h, w, _= frame.shape
                 frame = np.array(frame)
                 depth, segm = pipeline(frame, hydranet, NUM_CLASSES, CMAP)
-                ax1.imshow(frame)
-                ax1.set_title('ORIGINAL', fontsize=30)
-                ax2.imshow(segm)
-                ax2.set_title('SEGMENTATION', fontsize=30)
-                ax3.imshow(depth, cmap="plasma", vmin=0, vmax=80)
-                ax3.set_title('DEPTH', fontsize=30)
-                plt.pause(0.2)
+                video.append(cv2.cvtColor(cv2.vconcat([frame, segm, depth]), cv2.COLOR_BGR2RGB))
             else:
                 break
-        plt.ioff
-        plt.show()
+        out = cv2.VideoWriter('./out.mp4', cv2.VideoWriter_fourcc(*'MP4V'), 15, (w, 3*h))
+        for i in range(len(video)):
+            out.write(video[i])
         video.release()
 
     cv2.destroyAllWindows()
