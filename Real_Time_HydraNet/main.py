@@ -14,7 +14,14 @@ from utils.hydra import HydraNet
 from utils.helper import preprocess_image
 from PIL import Image
 
+
 # wget https://hydranets-data.s3.eu-west-3.amazonaws.com/hydranets-data.zip && unzip -q hydranets-data.zip && mv hydranets-data/* . && rm hydranets-data.zip && rm -rf hydranets-data
+
+def depth_to_rgb(depth):
+    normalizer = co.Normalize(vmin=0, vmax=80)
+    mapper = cm.ScalarMappable(norm=normalizer, cmap='plasma')
+    colormapped_im = (mapper.to_rgba(depth)[:, :, :3] * 255).astype(np.uint8)
+    return colormapped_im
 
 
 def pipeline(img, hydranet, NUM_CLASSES, CMAP):
@@ -94,13 +101,13 @@ def main(source, fpath):
         while video.isOpened():
             (check, frame) = video.read()
             if check:
-                h, w, _= frame.shape
+                h, w, _ = frame.shape
                 frame = np.array(frame)
                 depth, segm = pipeline(frame, hydranet, NUM_CLASSES, CMAP)
-                output_video.append(cv2.cvtColor(cv2.vconcat([frame, segm, depth]), cv2.COLOR_BGR2RGB))
+                output_video.append(cv2.cvtColor(cv2.vconcat([frame, segm, depth_to_rgb(depth)]), cv2.COLOR_BGR2RGB))
             else:
                 break
-        out = cv2.VideoWriter('./out.mp4', cv2.VideoWriter_fourcc(*'MP4V'), 15, (w, 3*h))
+        out = cv2.VideoWriter('./out.mp4', cv2.VideoWriter_fourcc(*'MP4V'), 15, (w, 3 * h))
         for i in range(len(output_video)):
             out.write(output_video[i])
         video.release()
