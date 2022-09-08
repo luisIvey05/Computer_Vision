@@ -102,13 +102,13 @@ def main(source, fpath):
             (check, frame) = video.read()
             if check:
                 h, w, _ = frame.shape
-                frame = np.array(frame)
                 depth, segm = pipeline(frame, hydranet, NUM_CLASSES, CMAP)
                 depth = depth_to_rgb(depth)
-                output_video.append(np.concatenate((frame, segm, depth)))
+                segm = np.float32(segm)
+                output_video.append(np.uint8(cv2.cvtColor(np.concatenate((frame, segm, depth), axis=0), cv2.COLOR_BGR2RGB)))
             else:
                 break
-        out = cv2.VideoWriter('./out.mp4', cv2.VideoWriter_fourcc(*'MP4V'), 15, (w, 3 * h))
+        out = cv2.VideoWriter('./out.mp4', cv2.VideoWriter_fourcc(*'mp4v'), 15, (w, 3 * h))
         for i in range(len(output_video)):
             out.write(output_video[i])
         video.release()
