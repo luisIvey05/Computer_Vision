@@ -3,7 +3,7 @@ from torch.autograd import Variable
 import torch
 import os
 import shutil
-import matplotlib as cm
+import matplotlib.cm as cm
 import matplotlib.colors as co
 import numpy as np
 import glob
