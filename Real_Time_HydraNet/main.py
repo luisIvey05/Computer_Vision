@@ -14,6 +14,8 @@ from utils.hydra import HydraNet
 from utils.helper import preprocess_image
 from PIL import Image
 
+# wget https://hydranets-data.s3.eu-west-3.amazonaws.com/hydranets-data.zip && unzip -q hydranets-data.zip && mv hydranets-data/* . && rm hydranets-data.zip && rm -rf hydranets-data
+
 
 def pipeline(img, hydranet, NUM_CLASSES, CMAP):
     with torch.no_grad():
@@ -88,6 +90,8 @@ def main(source, fpath):
         video = cv2.VideoCapture(fpath)
         if video.isOpened() == False:
             print("[INFO] ERROR OPENING VIDEO STREAM OR FILE")
+        f, (ax1, ax2, ax3) = plt.subplot(1, 3, figsize=(30, 20))
+        plt.ion()
         while video.isOpened():
             (check, frame) = video.read()
 
@@ -95,16 +99,17 @@ def main(source, fpath):
                 frame_size = frame.shape[:2]
                 frame = np.array(frame)
                 depth, segm = pipeline(frame, hydranet, NUM_CLASSES, CMAP)
-                f, (ax1, ax2, ax3) = plt.subplot(1, 3, figsize=(30, 20))
                 ax1.imshow(frame)
                 ax1.set_title('ORIGINAL', fontsize=30)
                 ax2.imshow(segm)
                 ax2.set_title('SEGMENTATION', fontsize=30)
                 ax3.imshow(depth, cmap="plasma", vmin=0, vmax=80)
                 ax3.set_title('DEPTH', fontsize=30)
-                plt.show()
+                plt.pause(0.2)
             else:
                 break
+        plt.ioff
+        plt.show()
         video.release()
 
     cv2.destroyAllWindows()
