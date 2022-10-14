@@ -65,7 +65,7 @@ def main(source, fpath):
     elif source == 1:
         img = np.array(Image.open(fpath))
         depth, segm = pipeline(img, hydranet, NUM_CLASSES, CMAP)
-
+        depth = depth_to_rgb(depth)
         # f, (ax1, ax2, ax3) = plt.subplot(1, 2, figsize=(30, 20))
         # ax1.imshow(img)
         # ax1.set_title('ORIGINAL', fontsize=30)

@@ -10,6 +10,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torchvision.transforms as transforms
 
+
 # Usual dtypes for common modalities
 KEYS_TO_DTYPES = {
     "segm": torch.long,
@@ -131,8 +132,8 @@ def preprocess(img_path, seg_path, dep_path):
     img_scale = 1.0 / 255
     depth_scale = 5000.0
 
-    img_mean = np.array([0.485, 0.456, 0.406])
-    img_std = np.array([0.229, 0.224, 0.225])
+    img_mean = np.array([0.381, 0.401, 0.386])
+    img_std = np.array([0.312, 0.321, 0.330])
 
     normalise_params = [img_scale, img_mean.reshape((1, 1, 3)), img_std.reshape((1, 1, 3)), depth_scale, ]
     transform_common = [Normalise(*normalise_params), ToTensor()]

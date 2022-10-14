@@ -112,6 +112,7 @@ def main(images, depth, seg):
 
     CMAP = np.load('cmap_nyud.npy')
 
+    # TODO: WORK ON PREPROCESSING STEP -> LOCATED IN DATALOADER.PY PREPROCESSING
     transform_train, transform_val = preprocess(img_path, seg, dep_path)
 
     trainloader = DataLoader(
