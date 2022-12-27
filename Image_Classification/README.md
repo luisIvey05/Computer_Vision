@@ -22,9 +22,6 @@ Convolutional Neural Networks (CNNs), used in image classification, successfully
 
 How CNNs compute feature maps from an input image, shown in Fig. 2, is based on local receptive fields. Local receptive fields or a local patch of pixels from the input image are mapped to a pixel in the output image. Local receptive fields are possible because of sparse connectivity within an image, allowing for parameter sharing. Sparse connectivity is the process of mapping input patches to output pixels. An example of the perks of sparse connectivity is,  translating an image from 5 pixels to the left or 5 pixels to the right would give the same prediction because nearby pixels in images are typically highly correlated. Parameters, or weights, can then be shared among this patch of pixels. Parameter sharing will then allow CNNs to substantially decrease the number of parameters in the network when fed into a fully connected layer. 
 
-
-![Fig. 2 Local receptive field being mapped to a single pixel from<a href=https://blog.christianperone.com/2017/11/the-effective-receptive-field-on-cnns/l> *Terra Incognita by Christian S. Perone* </a>](https://github.com/luisIvey05/Computer_Vision/blob/main/Image_Classification/images/res.png)
-
 | ![res.png](https://github.com/luisIvey05/Computer_Vision/blob/main/Image_Classification/images/res.png) |
 |:--:|
 | Fig. 2 Local receptive field being mapped to a single pixel from<a href=https://blog.christianperone.com/2017/11/the-effective-receptive-field-on-cnns/l> *Terra Incognita by Christian S. Perone* </a>|
