@@ -25,6 +25,9 @@ How CNNs compute feature maps from an input image, shown in Fig. 2, is based on 
 
 ![Fig. 2 Local receptive field being mapped to a single pixel from<a href=https://blog.christianperone.com/2017/11/the-effective-receptive-field-on-cnns/l> *Terra Incognita by Christian S. Perone* </a>](https://github.com/luisIvey05/Computer_Vision/blob/main/Image_Classification/images/res.png)
 
+| ![res.png](https://github.com/luisIvey05/Computer_Vision/blob/main/Image_Classification/images/res.png) |
+|:--:|
+| Fig. 2 Local receptive field being mapped to a single pixel from<a href=https://blog.christianperone.com/2017/11/the-effective-receptive-field-on-cnns/l> *Terra Incognita by Christian S. Perone* </a>|
 
 <p id="fil"> </p>
 
